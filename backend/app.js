@@ -2,11 +2,11 @@ import express from 'express'
 import { getStudent,getStudents,addStudent } from './back_end/database.js';
 import { addPenalty, getPenalties,updatePenalty } from './back_end/penalty.js';
 import { addGenre,getGenre,getGenres,updateStatusGenre,updateGenre } from './back_end/genre.js';
-import { addBook,getBooks } from './back_end/book.js';
+import { addBook,getBooks,updateBookQuantity } from './back_end/book.js';
 import cors from 'cors'
 const app = express();
 
-app.use(cors({origin:'http://localhost:3000'}));
+app.use(cors({origin:'http://localhost:3000',origin:'http://localhost:3001'}));
 app.use(express.json())
 
 // get all students record
@@ -116,6 +116,9 @@ app.put("/genre-status/:id",async (req,res)=>{
     res.send(results);
 })
 
+
+///////////////////////////////// Start Book ///////////////////
+
 // Add book API
 app.post("/book",async (req,res)=>{
     const results = await addBook(req.body);
@@ -127,7 +130,14 @@ app.get("/book",async (req,res)=>{
     res.send(results);
 })
 
+//update book quantity
+app.put("/book-quantity/:id",async (req,res)=>{
+    const id = req.params.id;
+    const results = await updateBookQuantity(req.body,id);
+    res.send(results);
+})
 
+///////////////////////////////// End Book ///////////////////
 // Detect possible error
 app.use((err,req,res,next)=>{
     console.error(err.stack);

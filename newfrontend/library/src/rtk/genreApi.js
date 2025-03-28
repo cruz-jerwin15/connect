@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 export const genreApi = createApi({
-    reducerpath:"genreApi",
+    reducerPath:"genreApi",
     baseQuery:fetchBaseQuery({baseUrl:"http://localhost:8080"}),
     tagTypes:["Genre"],
     endpoints:(builder)=>(
@@ -28,8 +28,16 @@ export const genreApi = createApi({
                     body:genres
                 }),
                 invalidatesTags:["Genre"]
+            }),
+            updateGenreStatus:builder.mutation({
+                query:(genres)=>({
+                    url:`/genre-status/${genres.id}`,
+                    method:"PUT",
+                    body:genres
+                }),
+                invalidatesTags:["Genre"]
             })
         }
     )
 })
-export const {useGetGenresQuery,useGetGenreQuery,useAddGenresMutation,useUpdateGenreMutation} = genreApi
+export const {useGetGenresQuery,useGetGenreQuery,useAddGenresMutation,useUpdateGenreMutation,useUpdateGenreStatusMutation} = genreApi

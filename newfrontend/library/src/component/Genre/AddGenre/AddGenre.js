@@ -1,6 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { useAddGenresMutation } from '@/rtk/genreApi';
+
+
+
 export default function AddGenre() {
+    
     const [genrename,setGenreName]  = useState('');
 
     const [addGenre] = useAddGenresMutation();
@@ -8,7 +12,8 @@ export default function AddGenre() {
     const setGenreNameText =(event)=>{
         setGenreName(event); 
     }
-
+    
+    
     const submitGenre=async()=>{
       const genre = {
         genre_name:genrename,
@@ -25,7 +30,7 @@ export default function AddGenre() {
             value={genrename}
             onChange={(e)=>setGenreNameText(e.target.value)}
         />
-
+   
         <button style={{backgroundColor:"blue",color:"white"}} 
                 onClick={()=>submitGenre()}
                 >Add</button>
